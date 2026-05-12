@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VolunteerMe — Show Up for the Leaders Who Show Up for You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #C0392B;
+      --red-dark: #96281B;
+      --red-light: #FADBD8;
+      --blue: #1A3A5C;
+      --blue-mid: #2E6DA4;
+      --blue-light: #D6EAF8;
+      --gold: #D4AC0D;
+      --gold-light: #FEF9E7;
+      --cream: #FDFBF7;
+      --ink: #1C1C1E;
+      --muted: #6B7280;
+      --border: #E5E0D8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: var(--blue);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .nav-cta {
+      background: var(--red);
+      color: #fff !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 4px;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--red-dark) !important; color: #fff !important; }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 88vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--blue);
+      padding: 6rem 4rem 5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      background: var(--blue);
+      clip-path: polygon(0 0, 0% 100%, 100% 100%);
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212,172,13,0.15);
+      border: 1px solid rgba(212,172,13,0.4);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.85);
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover { border-color: #fff; color: #fff; }
+
+    .hero-right {
+      background: var(--cream);
+      padding: 4rem 3rem 4rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* REMINDER CARDS */
+    .reminder-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      animation: slideIn 0.6s ease both;
+    }
+
+    .reminder-card:nth-child(1) { animation-delay: 0.1s; }
+    .reminder-card:nth-child(2) { animation-delay: 0.25s; margin-left: 1.5rem; }
+    .reminder-card:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .reminder-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .icon-sms  { background: var(--blue-light); color: var(--blue-mid); }
+    .icon-call { background: var(--red-light);  color: var(--red); }
+    .icon-map  { background: var(--gold-light); color: #8B6914; }
+
+    .reminder-body { flex: 1; }
+
+    .reminder-type {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .reminder-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .reminder-time {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .reminder-status {
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .status-sent      { background: #EAFAF1; color: #1E8449; }
+    .status-scheduled { background: var(--blue-light); color: var(--blue); }
+    .status-live      { background: var(--red-light);  color: var(--red); }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--blue);
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.15rem;
+    }
+
+    .stat-div {
+      width: 1px; height: 40px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* ABOUT SECTION */
+    .about-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+      text-align: center;
+    }
+
+    .about-section .section-label { justify-content: center; }
+
+    .about-section p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    /* SHARED SECTION STYLES */
+    section { padding: 5rem 3rem; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    /* HOW IT WORKS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      counter-reset: steps;
+    }
+
+    .step {
+      position: relative;
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      counter-increment: steps;
+    }
+
+    .step::before {
+      content: "0" counter(steps);
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .step-icon { font-size: 1.4rem; margin-bottom: 0.75rem; }
+
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .feature-cell {
+      padding: 2.25rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+      transition: background 0.2s;
+    }
+
+    .feature-cell:hover { background: var(--cream); }
+    .feature-cell:nth-child(2n)     { border-right: none; }
+    .feature-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+    .feature-icon-wrap {
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .f-red   { background: var(--red-light);  color: var(--red); }
+    .f-blue  { background: var(--blue-light); color: var(--blue-mid); }
+    .f-gold  { background: var(--gold-light); color: #8B6914; }
+    .f-green { background: #EAFAF1; color: #1E8449; }
+
+    .feature-cell h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--blue);
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-cell p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* CTA / SIGNUP */
+    .cta-section {
+      background: var(--blue);
+      text-align: center;
+      padding: 5rem 3rem;
+    }
+
+    .cta-section .section-title { color: #fff; }
+    .cta-section .section-sub   { color: rgba(255,255,255,0.6); margin: 0.75rem auto 2.5rem; }
+
+    .signup-form {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .signup-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1.25rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-input::placeholder { color: rgba(255,255,255,0.35); }
+    .signup-input:focus { border-color: rgba(255,255,255,0.5); }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #fff;
+      padding: 0.85rem 1.75rem;
+      border-radius: 4px;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-gold:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 2rem 3rem;
+      font-size: 0.82rem;
+    }
+
+    footer strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 3rem 1.5rem; }
+      .hero-left::after { display: none; }
+      .hero-right { padding: 2rem 1.5rem; }
+      .reminder-card:nth-child(2) { margin-left: 0; }
+
+      .stats-bar { flex-wrap: wrap; padding: 1.5rem; gap: 1.5rem; }
+      .stat-div { display: none; }
+
+      section { padding: 3rem 1.5rem; }
+
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-cell:nth-child(2n)        { border-right: none; }
+      .feature-cell:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+      .feature-cell:last-child           { border-bottom: none; }
+
+      .cta-section { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAVIGATION ====== -->
+  <nav>
+    <div class="nav-logo">Volunteer<span>Me</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#signup" class="nav-cta">Sign up</a></li>
+    </ul>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">Now active in your community</div>
+      <h1>Show up for the leaders who <em>show up</em> for you.</h1>
+      <p class="hero-sub">
+        VolunteerMe is a powerful platform that connects passionate volunteers with the political
+        candidates and community leaders they believe in — then keeps everyone organized with
+        automated reminders, calls, and texts so no one misses a moment.
+      </p>
+      <div class="hero-actions">
+        <a href="#signup" class="btn-primary">Find a Campaign →</a>
+        <a href="#how" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="reminder-card">
+        <div class="reminder-icon icon-sms">💬</div>
+        <div class="reminder-body">
+          <div class="reminder-type">Text reminder</div>
+          <div class="reminder-text">📍 Tomorrow: Door knocking at 42 Elm St, 10:00 AM</div>
+          <div class="reminder-time">Today at 6:00 PM</div>
+        </div>
+        <span class="reminder-status status-sent">Sent</span>
+      </div>
+
+      <div class="reminder-card">
+        <div class="reminder-icon icon-call">📞</div>
+        <div class="reminder-body">
+          <div class="reminder-type">Phone call</div>
+          <div class="reminder-text">Morning reminder call for Campaign Rally — Lincoln Park, 9 AM</div>
+          <div class="reminder-time">Tomorrow at 7:30 AM</div>
+        </div>
+        <span class="reminder-status status-scheduled">Scheduled</span>
+      </div>
+
+      <div class="reminder-card">
+        <div class="reminder-icon icon-map">📋</div>
+        <div class="reminder-body">
+          <div class="reminder-type">New shift available</div>
+          <div class="reminder-text">Phone banking for Mayor Johnson — Saturday, 2–5 PM</div>
+          <div class="reminder-time">Sign up closes in 2 days</div>
+        </div>
+        <span class="reminder-status status-live">Open</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== STATS BAR ====== -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">48,200+</div>
+      <div class="stat-label">Volunteers</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-num">1,900+</div>
+      <div class="stat-label">Active campaigns</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-num">310+</div>
+      <div class="stat-label">Cities covered</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Show-up rate</div>
+    </div>
+  </div>
+
+  <!-- ====== ABOUT ====== -->
+  <div id="about" class="about-section">
+    <span class="section-label" style="display:block; text-align:center; margin-bottom:0.75rem;">Our mission</span>
+    <h2 class="section-title" style="text-align:center; margin-bottom:1.5rem;">Democracy runs on people power.</h2>
+    <p>
+      VolunteerMe is a powerful platform designed to connect passionate volunteers with the political
+      candidates and community leaders they support. Our platform helps organize volunteer efforts
+      during election campaigns by providing schedules, reminders, and automated phone calls so
+      volunteers always know when and where they are needed. Whether it's knocking on doors,
+      supporting outreach programs, or assisting local candidates — from city council races to
+      mayoral campaigns — VolunteerMe makes it easy to stay informed, stay organized, and make a
+      real difference in your community. Because the leaders who fight for your neighborhood deserve
+      a team that shows up.
+    </p>
+  </div>
+
+  <!-- ====== HOW IT WORKS ====== -->
+  <section id="how" style="background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <span class="section-label">How it works</span>
+      <h2 class="section-title">From sign-up to showing up — in minutes.</h2>
+      <p class="section-sub">No complicated apps, no confusion. VolunteerMe handles the scheduling and reminders so you can focus on what matters: making a difference.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon">🔍</div>
+          <h3>Find your candidate</h3>
+          <p>Browse campaigns and community leaders in your area who align with your values and vision for your community.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">📅</div>
+          <h3>Pick your shifts</h3>
+          <p>Choose from door knocking, phone banking, event support, and more — all on a schedule that works for you.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">🔔</div>
+          <h3>Get reminded</h3>
+          <p>Receive automated texts and phone calls with location details and timing so you never miss a volunteer opportunity.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">🤝</div>
+          <h3>Show up &amp; make change</h3>
+          <p>Meet your team, hit the streets, and help elect the leaders your community truly deserves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FEATURES ====== -->
+  <section id="features">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <span class="section-label">Features</span>
+      <h2 class="section-title">Everything a great volunteer needs.</h2>
+      <p class="section-sub">Built for real campaigns, real volunteers, and real impact — with the tools to keep everyone in sync.</p>
+      <div class="features-grid">
+        <div class="feature-cell">
+          <div class="feature-icon-wrap f-red">📞</div>
+          <h3>Automated reminder calls</h3>
+          <p>Personalized phone calls remind you of upcoming volunteer shifts the day before and morning of. No app required — just pick up.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon-wrap f-blue">💬</div>
+          <h3>Text message alerts</h3>
+          <p>SMS notifications include the location, time, and what to bring — sent right to your phone so you're always prepared.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon-wrap f-gold">🗺️</div>
+          <h3>Shift scheduling &amp; maps</h3>
+          <p>See your full volunteer schedule in one place with integrated maps showing exactly where to meet your team.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon-wrap f-green">✅</div>
+          <h3>Check-in &amp; attendance</h3>
+          <p>Campaigns track turnout in real time, so coordinators always know who's on the ground and who needs a nudge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CTA / SIGNUP ====== -->
+  <section class="cta-section" id="signup">
+    <span class="section-label" style="color: var(--gold);">Ready to volunteer?</span>
+    <h2 class="section-title">Your community is counting on you.</h2>
+    <p class="section-sub">Enter your email to find campaigns near you and start making a real difference — one door at a time.</p>
+    <div class="signup-form">
+      <input type="email" class="signup-input" placeholder="Your email address" />
+      <button class="btn-gold">Get Started</button>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <p><strong>VolunteerMe</strong> &nbsp;·&nbsp; Connecting communities, one volunteer at a time &nbsp;·&nbsp; &copy; 2026</p>
+  </footer>
+
+</body>
+</html>
